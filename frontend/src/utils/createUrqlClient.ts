@@ -1,11 +1,11 @@
 import { dedupExchange, fetchExchange } from "urql";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import {
-  LoginMutation,
+  LogoutMutation,
   MeQuery,
   MeDocument,
+  LoginMutation,
   RegisterMutation,
-  LogoutMutation,
 } from "../generated/graphql";
 import { betterUpdateQuery } from "./betterUpdateQuery";
 
@@ -19,7 +19,15 @@ export const createUrqlClient = (ssrExchange: any) => ({
     cacheExchange({
       updates: {
         Mutation: {
-          login: (_result, _args, cache, _info) => {
+          logout: (_result, args, cache, info) => {
+            betterUpdateQuery<LogoutMutation, MeQuery>(
+              cache,
+              { query: MeDocument },
+              _result,
+              () => ({ me: null })
+            );
+          },
+          login: (_result, args, cache, info) => {
             betterUpdateQuery<LoginMutation, MeQuery>(
               cache,
               { query: MeDocument },
@@ -35,7 +43,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
               }
             );
           },
-          register: (_result, _args, cache, _info) => {
+          register: (_result, args, cache, info) => {
             betterUpdateQuery<RegisterMutation, MeQuery>(
               cache,
               { query: MeDocument },
@@ -49,14 +57,6 @@ export const createUrqlClient = (ssrExchange: any) => ({
                   };
                 }
               }
-            );
-          },
-          logout: (_result, _args, cache, _info) => {
-            betterUpdateQuery<LogoutMutation, MeQuery>(
-              cache,
-              { query: MeDocument },
-              _result,
-              () => ({ me: null })
             );
           },
         },

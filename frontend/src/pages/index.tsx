@@ -1,7 +1,6 @@
-import React from "react";
 import { NavBar } from "../components/NavBar";
 import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlCliet";
+import { createUrqlClient } from "../utils/createUrqlClient";
 import { usePostsQuery } from "../generated/graphql";
 
 const Index = () => {
@@ -9,8 +8,10 @@ const Index = () => {
   return (
     <>
       <NavBar />
+      <div>Posts</div>
+      <br />
       {!data ? (
-        <div>loading...</div>
+        <div>Loading posts...</div>
       ) : (
         data.posts.map((p) => <div key={p.id}>{p.title}</div>)
       )}

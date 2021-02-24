@@ -1,20 +1,19 @@
 import React from "react";
-import { Form, Formik } from "formik";
-import { Box, Button } from "@chakra-ui/react";
+import { Formik, Form } from "formik";
+import { Box, Button } from "@chakra-ui/core";
 import { Wrapper } from "../components/Wrapper";
 import { InputField } from "../components/InputField";
 import { useRegisterMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useRouter } from "next/router";
 import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlCliet";
+import { createUrqlClient } from "../utils/createUrqlClient";
 
 interface registerProps {}
 
-export const Register: React.FC<registerProps> = ({}) => {
+const Register: React.FC<registerProps> = ({}) => {
   const router = useRouter();
   const [, register] = useRegisterMutation();
-
   return (
     <Wrapper variant="small">
       <Formik
@@ -24,6 +23,7 @@ export const Register: React.FC<registerProps> = ({}) => {
           if (response.data?.register.errors) {
             setErrors(toErrorMap(response.data.register.errors));
           } else if (response.data?.register.user) {
+            // worked
             router.push("/");
           }
         }}
@@ -33,16 +33,16 @@ export const Register: React.FC<registerProps> = ({}) => {
             <InputField
               name="username"
               placeholder="username"
-              label="username"
+              label="Username"
             />
             <Box mt={4}>
-              <InputField name="email" placeholder="email" label="email" />
+              <InputField name="email" placeholder="email" label="Email" />
             </Box>
             <Box mt={4}>
               <InputField
                 name="password"
                 placeholder="password"
-                label="password"
+                label="Password"
                 type="password"
               />
             </Box>
@@ -50,7 +50,7 @@ export const Register: React.FC<registerProps> = ({}) => {
               mt={4}
               type="submit"
               isLoading={isSubmitting}
-              variantcolor="teal"
+              variantColor="teal"
             >
               register
             </Button>
