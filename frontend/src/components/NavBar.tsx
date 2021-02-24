@@ -14,20 +14,21 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
 
   let body = null;
 
+  // data is loading
   if (fetching) {
+    // user not logged in
   } else if (!data?.me) {
     body = (
       <>
         <NextLink href="/login">
-          <Link color="white" mr={2}>
-            Login
-          </Link>
+          <Link mr={2}>login</Link>
         </NextLink>
         <NextLink href="/register">
-          <Link color="white">Register</Link>
+          <Link>register</Link>
         </NextLink>
       </>
     );
+    // user is logged in
   } else {
     body = (
       <Flex>
@@ -39,14 +40,14 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
           isLoading={logoutFetching}
           variant="link"
         >
-          Logout
+          logout
         </Button>
       </Flex>
     );
   }
 
   return (
-    <Flex bg="brown" p={4}>
+    <Flex zIndex={1} position="sticky" top={0} bg="brown" p={4}>
       <Box ml={"auto"}>{body}</Box>
     </Flex>
   );

@@ -21,9 +21,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
       >
         {({ isSubmitting }) =>
           complete ? (
-            <Box>
-              An link to reset your password has been sent to the email.
-            </Box>
+            <Box>An email will be sent to reset your password.</Box>
           ) : (
             <Form>
               <InputField

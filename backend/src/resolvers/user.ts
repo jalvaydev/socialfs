@@ -43,6 +43,8 @@ export class UserResolver {
       return null;
     }
 
+    console.log(req.session.userId);
+
     return User.findOne(req.session.userId);
   }
 
